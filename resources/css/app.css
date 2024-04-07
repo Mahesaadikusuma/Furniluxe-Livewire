@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] {
+    display: none;
+}
+@layer utilities {
+    .heroes {
+        background-image: url("/public/assets/image/hero.jpg ");
+        @apply bg-cover py-96 object-cover bg-center bg-opacity-60;
+    }
+}
+
+@layer components {
+    .card img {
+        @apply duration-500 ease-in-out;
+    }
+
+    .card:hover img {
+        @apply scale-125;
+    }
+
+    .button-buy {
+        @apply px-4 py-1 bg-yellow-500 rounded-full text-white;
+    }
+}
