@@ -1,84 +1,103 @@
-@section('title')
-    HomePage
-@endsection
+<div>
 
-<div class="">
-    @include('includes.hero')
-    <!-- Choosing Us -->
-    <section>
-        <div class="container mx-auto p-5 mt-32">
-            <div class="grid lg:grid-cols-4 grid-cols-1 lg:place-items-center place-content-center gap-10">
-                <div class="">
-                    <h1 class="text-second font-bold text-[42px]">
-                        Why <br />
-                        Choosing Us
-                    </h1>
-                </div>
+    <!-- Hero -->
+    <x-hero.header>
+        <h1 class="font-bold lg:text-5xl sm:text-4xl text-2xl mb-10 hidden lg:block">
+            Elevate the look of your interior with <br>
+            captivating minimalistic touches and <br>
+            modern style
+        </h1>
 
-                <x-card.feature title="Luxury facilities"
-                    body='The advantage of hiring a workspace with us is that givees you
-        comfortable service and all-around facilities'
-                    link='' />
+        <h1 class="font-bold lg:text-5xl sm:text-4xl text-2xl mb-10 block  md:hidden">
+            Elevate the look of your interior with
+            captivating minimalistic touches and
+            modern style
+        </h1>
 
-                <x-card.feature title="Affordable Price"
-                    body='You can get a workspace of the highst quality at an affordable
-                        price and still enjoy the facilities that are oly here.'
-                    link='' />
+        <p class="lg:text-xl sm:text-lg text-base mb-11 hidden lg:block">
+            you can effortlessly and quickly transform your room <br>
+            into a minimalist and modern space, creating a fresh <br>
+            and stylish atmosphere
+        </p>
 
-                <x-card.feature title="Many Choices"
-                    body='We provide many unique work space choices so that you can choose
-                        the workspace to your liking.'
-                    link='' />
-            </div>
-        </div>
-    </section>
-    <!-- Choosing Us -->
+
+        <p class="lg:text-xl sm:text-lg text-base mb-11 block  md:hidden">
+            you can effortlessly and quickly transform your room
+            into a minimalist and modern space, creating a fresh
+            and stylish atmosphere
+        </p>
+
+        <a href="#" class="px-7 py-2   rounded-lg  bg-neutral-800 text-white hover:border-2 hover:border-white">
+            Shop Now
+        </a>
+    </x-hero.header>
+    <!-- Hero -->
+
+    @include('includes.choosing')
 
     <!-- Category Product  -->
-    <x-fragment.product title="Category Product">
+    <x-fragment.category>
+        <h1 class="text-center font-bold text-xl lg:text-2xl mb-16 text-neutral-800">
+            Category Product
+        </h1>
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-3">
-            <x-card.category href="{{ route('category') }}" image="{{ asset('assets/image/furniture-1.jpg') }}"
-                title='Interior' />
+            @foreach ($category as $item)
+                <x-category.product>
+                    <a wire:navigate href="{{ route('category') }}"
+                        class="block relative rounded overflow-hidden cursor-pointer">
+                        <img alt="ecommerce" class="object-cover bg-cover w-full h-56 block"
+                            src="{{ asset('assets/image/furniture-3.jpg') }}" />
+                    </a>
 
-            <x-card.category href="{{ route('category') }}" image="{{ asset('assets/image/furniture-2.jpg') }}"
-                title='Kursi' />
-
-            <x-card.category href="{{ route('category') }}" image="{{ asset('assets/image/furniture-3.jpg') }}"
-                title='Sofa' />
-
-            <x-card.category href="{{ route('category') }}" image="{{ asset('assets/image/furniture-4.jpg') }}"
-                title='Dapur' />
+                    <div class="my-5 pb-5">
+                        <a href="#" class="text-center">
+                            <h2 class="text-lg font-medium tracking-tight text-gray-800 dark:text-white">
+                                {{ $item->name }}
+                            </h2>
+                        </a>
+                    </div>
+                </x-category.product>
+            @endforeach
         </div>
-    </x-fragment.product>
+
+    </x-fragment.category>
     <!-- Category product -->
 
     <!-- Product  -->
-    <x-fragment.product title="Product">
+    <x-fragment.product>
+        <h1 class="text-center font-bold text-2xl lg:text-3xl mb-16 text-neutral-800">
+            Product
+        </h1>
+
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-3">
-            <x-card.product href="{{ route('detailProduct') }}" image="{{ asset('assets/image/furniture-1.jpg') }}"
-                title="The Catalyzer Lorem ipsum dolor sit amet consectetur adipisicing
-            elit. lore"
-                category='CATEGORY' price='200.000' />
+            @foreach ($product as $item)
+                <div class="w-full card shadow-md object-cover max-h-80 bg-cover">
+                    <a href="{{ route('productDetail', $item->slug) }}"
+                        class="block relative rounded overflow-hidden cursor-pointer">
+                        <img alt="ecommerce" class="object-cover bg-cover w-full h-44 block"
+                            src="{{ asset(Storage::url($item->image)) }}" />
+                    </a>
+                    <div class="my-2 p-2 ">
+                        <h2 class="text-gray-500 text-xs tracking-widest title-font mb-2">
+                            {{ $item->category->name }}
+                        </h2>
+                        <h3 class="text-gray-900 title-font text-base font-bold">
+                            {{ $item->name }}
+                        </h3>
+                        <div class="flex items-center justify-between mt-3">
+                            <p class="mt-1 font-medium text-orange-500">{{ $item->Priced }}</p>
 
-            <x-card.product href="{{ route('detailProduct') }}" image="{{ asset('assets/image/furniture-2.jpg') }}"
-                title="The Catalyzer Lorem ipsum dolor sit amet consectetur adipisicing
-            elit. lore"
-                category='CATEGORY' price='100.000' />
+                        </div>
+                    </div>
+                </div>
+            @endforeach
 
-            <x-card.product href="{{ route('detailProduct') }}" image="{{ asset('assets/image/furniture-3.jpg') }}"
-                title="The Catalyzer Lorem ipsum dolor sit amet consectetur adipisicing
-            elit. lore"
-                category='CATEGORY' price='150.000' />
 
-            <x-card.product href="{{ route('detailProduct') }}" image="{{ asset('assets/image/furniture-1.jpg') }}"
-                title="The Catalyzer Lorem ipsum dolor sit amet consectetur adipisicing
-            elit. lore"
-                category='CATEGORY' price='200.000' />
         </div>
 
         <div class="flex items-center justify-center mt-10">
-            <a
-                class="flex items-center gap-2 px-5 py-2 rounded-full cursor-pointer border-2 border-slate-800 hover:border-0 hover:bg-slate-600 hover:text-white text-neutral-950">Load
+            <a href="{{ route('category') }}" wire:navigate
+                class="flex items-center gap-2 px-5 py-1 rounded-full cursor-pointer border-2 border-slate-800 hover:border-0 hover:bg-slate-600 hover:text-white text-neutral-950">Load
                 More
                 <i data-feather="arrow-right"></i>
             </a>
@@ -86,30 +105,6 @@
     </x-fragment.product>
     <!-- product -->
 
-    <section>
-        <div class="container mx-auto">
-            <div class="grid lg:grid-cols-2 grid-cols-1 place-items-center">
-                <div class="mt-5 lg:mt-0 px-5 lg:px-0">
-                    <h1 class="text-neutral-800 font-bold lg:text-5xl text-3xl mb-5">
-                        Exquisite Materials for Crafting Exceptional Furniture
-                    </h1>
-                    <p class="text-slate-700 font-light text-lg text-justify">
-                        Explore our carefully selected materials known for their
-                        durability, strength, and exquisite beauty. With these materials,
-                        you can create long-lasting, elegant, and highly valuable
-                        furniture. Explore our collection of premium materials and start
-                        crafting impressive furniture today
-                    </p>
-                </div>
+    @include('includes.feature')
 
-                <div class="order-first lg:order-last">
-                    <img class="lg:max-w-lg max-w-md" src="{{ asset('assets/image/material.png') }}"
-                        alt="crafting Furniture" />
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    
 </div>

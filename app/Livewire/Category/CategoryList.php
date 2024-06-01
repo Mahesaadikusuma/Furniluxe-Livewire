@@ -2,22 +2,30 @@
 
 namespace App\Livewire\Category;
 
+use Livewire\Component;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\Title;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
-use Livewire\Component;
+use Livewire\Attributes\Url;
+
+
+#[Title('CategoryList')]
+#[Layout("layouts.main")]
 
 class CategoryList extends Component
 {
     
-    public function delete($id)
-    {
-        $category = Category::find($id);
-        // $this->authorize('delete', $category); // ini seperti role ketika rolenya harus untuk menghapus maka bisa selain itu tidak akan bisa di hapus
-        $category->delete();
-    }
+    public Category $category;
+
+    #[Url()]
+    public $search = '';
+    
+    protected $listeners = ['updateCategory' => '$refresh'];
 
 
+    
     public function removeTMP(){
         $oldFile = Storage::files('livewire-tmp');
 
@@ -25,16 +33,24 @@ class CategoryList extends Component
             Storage::delete($file);
         }
         session()->flash('success', 'File livewire-tmp Deleted');
-        return redirect()->route('dashboard');
-    }
+        return redirect()->route('categories');
+    }    
 
 
-    #[On('updateCategory')]
-    public function render()
+    #[On('updateCategory')] 
+    
+    public function refreshPost()
     {
-        // $category = Category::all();
-        return view('livewire.category.category-list', [
-            'category' => Category::orderBy('id', 'desc')->get()
+        // ...
+    }
+    public function render()
+    {   
+        // orderBy('id', 'desc')->
+        // users' => User::search($this->search)->get(),
+        $categories = Category::orderBy('id', 'desc')->get();
+        return view('livewire.category.category-list',[
+            // 'categories' => $categories
+            'categories' => Category::where('name', 'like', '%' . $this->search . '%')->get(),
         ]);
     }
 }

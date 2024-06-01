@@ -3,16 +3,10 @@
 namespace App\Livewire\Category;
 
 use App\Models\Category;
-
-use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
-use Livewire\WithFileUploads;
+use Livewire\Features\SupportFileUploads\WithFileUploads;
 
-
-#[Title('Create Category')]
-#[Layout("layouts.main")]
 class Create extends Component
 {
     use WithFileUploads;
@@ -44,7 +38,7 @@ class Create extends Component
         //     $this->only(['name', 'thumbnail'])
             // $this->all()
         // );
-        Category::create([
+        $category = Category::create([
             'name' => $this->name,
             'thumbnail' => $this->thumbnail ? $path : null,
         ]);
@@ -52,19 +46,16 @@ class Create extends Component
 
         $this->reset('name', 'thumbnail');
         session()->flash('success', 'Category created successfully');
-        return redirect()->route('dashboard');
+
+         
+        return redirect()->route('categories');
         // return redirect()->to('/categories');
     
     }
 
-    public function remove() {
+     public function remove() {
         $this->loadingSave = false;
     }
-
-    public function test() {
-        dd('hello');
-    }
-
     public function render()
     {
         return view('livewire.category.create');

@@ -2,18 +2,24 @@
 
 namespace App\Livewire;
 
+use App\Models\Category;
+use App\Models\Product;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Lazy;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Title('HomePage')]
-#[Layout("layouts.main")]
-
+#[Layout('layouts.main')]
+#[Title('Home Page')]
 class HomePage extends Component
 {
     public function render()
     {
-        return view('livewire.home-page');
+        $category = Category::take(4)->get();
+        $product = Product::with(['category'])->take(4)->get();
+
+        return view('livewire.home-page', [
+            'category' => $category,
+            'product' => $product
+        ]);
     }
 }
