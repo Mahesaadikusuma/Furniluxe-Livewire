@@ -62,7 +62,7 @@ class Transaction extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function transactionDetail(): HasOne
+    public function detail(): HasOne
     {
         return $this->hasOne(TransactionDetail::class, 'transaction_id', 'id');
     }

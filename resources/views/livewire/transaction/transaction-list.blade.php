@@ -92,15 +92,17 @@
                         <td class="px-6 py-4  flex">
                             {{-- @livewire('product.product-edit', ['product' => $item], key($item->id)) --}}
                             <livewire:transaction.transaction-edit :transaction="$item" wire:key='{{ $item->id }}' />
-                            {{-- <livewire:transaction.transaction-delete :transaction="$item"
-                                wire:key='{{ $item->id }}' /> --}}
+
                         </td>
 
                     </tr>
                 @empty
                 @endforelse
-
             </tbody>
         </table>
+
+        <div class="p-5">
+            {{ $transaction->links() }}
+        </div>
     </div>
 </div>

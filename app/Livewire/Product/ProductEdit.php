@@ -67,7 +67,6 @@ class ProductEdit extends Component
             $path = $this->image->storeAs("product", $namePath, "public");
         }
         
-        
         $products->update([
             'category_id' => $this->category_id,
             'name' => $this->name,

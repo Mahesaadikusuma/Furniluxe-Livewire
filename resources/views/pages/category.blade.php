@@ -1,4 +1,4 @@
-@section('title', 'Category')
+@section('title', 'Dashboard Category')
 
 <x-app-layout>
     <x-slot name="header">

@@ -5,8 +5,6 @@
     </button>
 
     <x-modal wire:model="showModal">
-
-
         <form wire:submit='update'>
             <div class="p-4 md:p-5 space-y-4">
                 <div class="mb-5">

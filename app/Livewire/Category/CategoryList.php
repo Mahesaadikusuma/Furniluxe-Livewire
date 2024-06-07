@@ -39,10 +39,7 @@ class CategoryList extends Component
 
     #[On('updateCategory')] 
     
-    public function refreshPost()
-    {
-        // ...
-    }
+    
     public function render()
     {   
         // orderBy('id', 'desc')->
@@ -50,7 +47,7 @@ class CategoryList extends Component
         $categories = Category::orderBy('id', 'desc')->get();
         return view('livewire.category.category-list',[
             // 'categories' => $categories
-            'categories' => Category::where('name', 'like', '%' . $this->search . '%')->get(),
+            'categories' => Category::where('name', 'like', '%' . $this->search . '%')->paginate(10),
         ]);
     }
 }

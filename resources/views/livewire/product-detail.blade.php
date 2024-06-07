@@ -105,6 +105,7 @@
                         <div>
                             <p class="leading-relaxed mb-4">
                                 Review Produk Anda di sini...
+
                             </p>
                         </div>
                     @endif
@@ -112,7 +113,7 @@
 
                 </div>
                 <img alt="ecommerce"
-                    class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded order-first lg:order-last"
+                    class="lg:w-1/2 h-full object-cover object-center rounded order-first lg:order-last"
                     src="{{ asset(Storage::url($detail->image)) }}" />
             </div>
 

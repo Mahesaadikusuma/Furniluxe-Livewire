@@ -85,7 +85,11 @@
                     </tr>
                 @endforeach
 
+
             </tbody>
         </table>
+        <div class="p-5">
+            {{ $categories->links() }}
+        </div>
     </div>
 </div>

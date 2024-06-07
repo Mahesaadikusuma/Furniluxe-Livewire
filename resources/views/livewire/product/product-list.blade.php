@@ -84,7 +84,6 @@
                             <livewire:product.product-edit :product="$item" wire:key='{{ $item->id }}' />
                             <livewire:product.product-delete :product="$item" wire:key='{{ $item->id }}' />
                         </td>
-
                     </tr>
                 @empty
                     <tr>
@@ -94,5 +93,8 @@
 
             </tbody>
         </table>
+        <div class="p-5">
+            {{ $product->links() }}
+        </div>
     </div>
 </div>

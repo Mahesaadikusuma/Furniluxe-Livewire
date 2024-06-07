@@ -46,7 +46,7 @@
                     <a wire:navigate href="{{ route('category') }}"
                         class="block relative rounded overflow-hidden cursor-pointer">
                         <img alt="ecommerce" class="object-cover bg-cover w-full h-56 block"
-                            src="{{ asset('assets/image/furniture-3.jpg') }}" />
+                            src="{{ asset(Storage::url($item->thumbnail)) }}" />
                     </a>
 
                     <div class="my-5 pb-5">

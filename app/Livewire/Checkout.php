@@ -97,53 +97,55 @@ class Checkout extends Component
             ]);
 
             // konfigurasi midtrans
-            \Midtrans\Config::$serverKey = config('services.midtrans.serverKey');
-            \Midtrans\Config::$isProduction = config('services.midtrans.isProduction');
-            \Midtrans\Config::$isSanitized = config('services.midtrans.isSanitized');
-            \Midtrans\Config::$is3ds = config('services.midtrans.is3ds');
-            $midtrans = [
-                'transaction_details' => [
-                    'order_id' => $code,
-                    'gross_amount' => (int) $this->total,
-                ],
-                'item_details' => [
-                [
-                    'id' => $this->product->id,
-                    'price' => (int) $this->total,
-                    'quantity' => (int) $this->qty,
-                    'name' => $this->product->name,
-                    'brand' => 'Midtrans',
-                    'category' => $this->product->category->name,                   
-                    ],
-                ],
+            // \Midtrans\Config::$serverKey = config('services.midtrans.serverKey');
+            // \Midtrans\Config::$isProduction = config('services.midtrans.isProduction');
+            // \Midtrans\Config::$isSanitized = config('services.midtrans.isSanitized');
+            // \Midtrans\Config::$is3ds = config('services.midtrans.is3ds');
+            // $midtrans = [
+            //     'transaction_details' => [
+            //         'order_id' => $code,
+            //         'gross_amount' => (int) $this->total,
+            //     ],
+            //     'item_details' => [
+            //     [
+            //         'id' => $this->product->id,
+            //         'price' => (int) $this->total,
+            //         'quantity' => (int) $this->qty,
+            //         'name' => $this->product->name,
+            //         'brand' => 'Midtrans',
+            //         'category' => $this->product->category->name,                   
+            //         ],
+            //     ],
                 
-                'customer_details' => [
-                    'first_name' => $user->name,
-                    'email' => $user->email,
-                ],
-                // 'enabled_payments' => [
-                //     'gopay', 'permata_va', 'bank_transfer'
-                // ],
-                'vtweb'=> [],
-            ];
+            //     'customer_details' => [
+            //         'first_name' => $user->name,
+            //         'email' => $user->email,
+            //     ],
+            //     // 'enabled_payments' => [
+            //     //     'gopay', 'permata_va', 'bank_transfer'
+            //     // ],
+            //     'vtweb'=> [],
+            // ];
 
-            try {
-            // Get Snap Payment Page URL
-            $paymentUrl = \Midtrans\Snap::createTransaction($midtrans)->redirect_url;
-            DB::commit();
+            // try {
+            // // Get Snap Payment Page URL
+            // $paymentUrl = \Midtrans\Snap::createTransaction($midtrans)->redirect_url;
             
-            // Redirect to Snap Payment Page
-            return redirect($paymentUrl);
-            }
-            catch (Exception $e) {
-                DB::rollBack();
-                return redirect()->back()->withErrors($e->getMessage());
+            // // Redirect to Snap Payment Page
+            // return redirect($paymentUrl);
+            // }
+            // catch (Exception $e) {
+            //     return redirect()->back()->withErrors($e->getMessage());
 
-            }
+            // }
+
+            DB::commit();
 
 
-            // return redirect()->to('/success');
+            return redirect()->to('/success');
         } catch (Exception $e) {
+                DB::rollBack();
+
             return redirect()->back()->withErrors($e->getMessage());
         }
 
