@@ -921,10 +921,17 @@
                     @if (Route::has('login'))
                         <nav class="-mx-3 flex flex-1 justify-end">
                             @auth
-                                <a href="{{ url('/dashboard') }}"
-                                    class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]">
-                                    Dashboard
-                                </a>
+                                @role('Administrator')
+                                    <a href="{{ route('dashboard') }}"
+                                        class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                                        Dashboard admin
+                                    </a>
+                                @else
+                                    <a href="{{ route('dashboard-guest') }}"
+                                        class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]">
+                                        Dashboard guest
+                                    </a>
+                                @endrole
                             @else
                                 <a href="{{ route('login') }}"
                                     class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]">

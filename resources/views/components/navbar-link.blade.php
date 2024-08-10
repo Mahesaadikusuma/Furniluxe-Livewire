@@ -8,6 +8,6 @@
 @endphp
 
 
-<a {{ $attributes->merge(['class' => $classes]) }}>
+<a wire:navigate {{ $attributes->merge(['class' => $classes]) }}>
     {{ $slot }}
 </a>

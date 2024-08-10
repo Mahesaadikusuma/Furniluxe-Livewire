@@ -14,7 +14,6 @@
             </svg>
         </button>
 
-
         <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
             <ul
                 class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 lg:bg-transparent  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
@@ -33,7 +32,7 @@
                 </li>
 
                 <li>
-                    <x-navbar-link href="{{ route('category') }}" :active="request()->routeIs('category')">
+                    <x-navbar-link href="{{ route('categories') }}" :active="request()->routeIs('categories')">
                         Category
                     </x-navbar-link>
                 </li>
@@ -44,22 +43,42 @@
                         Contact
                     </x-navbar-link>
                 </li>
+
+                <li wire:poll>
+                    @auth
+                        @livewire('pages.cart-icon')
+                    @endauth
+                </li>
+                {{-- --}}
+
+
+
             </ul>
 
             @auth
+                <div class="">
+
+                </div>
+
                 <div class="mx-3">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                                 <button
                                     class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                                    <img class="h-8 w-8 rounded-full object-cover"
-                                        src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                                    @if (Auth::user()->profile_photo_path)
+                                        <img class="h-8 w-8 rounded-full object-cover"
+                                            src="{{ Storage::url(Auth::user()->profile_photo_path) }}"
+                                            alt="{{ Auth::user()->name }}" />
+                                    @else
+                                        <img class="h-8 w-8 rounded-full object-cover"
+                                            src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                                    @endif
                                 </button>
                             @else
                                 <span class="inline-flex rounded-md">
                                     <button type="button"
-                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
+                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-800  focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
                                         {{ Auth::user()->name }}
 
                                         <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -78,9 +97,16 @@
                                 {{ __('Manage Account') }}
                             </div>
 
-                            <x-dropdown-link href="{{ route('dashboard') }}">
-                                {{ __('Dashboard') }}
-                            </x-dropdown-link>
+                            @role('Administrator')
+                                <x-dropdown-link href="{{ route('dashboard') }}">
+                                    {{ __('Dashboard') }}
+                                </x-dropdown-link>
+                            @else
+                                <x-dropdown-link href="{{ route('dashboard-guest') }}">
+                                    {{ __('Dashboard') }}
+                                </x-dropdown-link>
+                            @endrole
+
 
                             {{-- <x-dropdown-link href="{{ route('profile.show') }}">
                                 {{ __('Profile') }}

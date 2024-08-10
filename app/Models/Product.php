@@ -2,18 +2,17 @@
 
 namespace App\Models;
 
-use Cviebrock\EloquentSluggable\Services\SlugService;
-use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes, Sluggable;
-
-    protected $table = 'products';
+    use HasFactory, Sluggable;
+    
     protected $fillable = [
         'category_id',
         'name',
@@ -21,45 +20,52 @@ class Product extends Model
         'description',
         'image',
         'price',
+        'category_id',
         'stok',
     ];
 
-    /**
-     * Return the sluggable configuration array for this model.
-     *
-     * @return array
-     */
     public function sluggable(): array
     {
         return [
             'slug' => [
-                'source' => 'name',
-                // 'onUpdate' => true,
+                'source' => 'name'
             ]
         ];
     }
 
-      protected static function boot()
+    protected static function boot()
     {
         parent::boot();
 
         static::updating(function ($product) {
-            $product->slug = SlugService::createSlug($product, 'slug', $product->name);
+            $product ->slug = SlugService::createSlug($product, 'slug', $product->name);
         });
     }
 
-     public function getPricedAttribute()
+    public function getPricedAttribute()
     {
         return 'Rp. ' . number_format($this->price, 0, ',', '.');
     }
 
+
     /**
-     * Get the user that owns the Product
+     * Get the categories that owns the Product
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class, 'category_id');
+        // , 'category_id', 'id'
+        return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Get all of the comments for the Product
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function Reviews(): HasMany
+    {
+        return $this->hasMany(Review::class, 'product_id', 'id');
     }
 }

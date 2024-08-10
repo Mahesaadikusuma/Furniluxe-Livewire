@@ -2,21 +2,22 @@
 
 namespace App\Models;
 
-use Cviebrock\EloquentSluggable\Services\SlugService;
-use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Cviebrock\EloquentSluggable\Services\SlugService;
+
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 
 class Category extends Model
 {
-    use HasFactory, Sluggable;
-
-    protected $table = 'categories';
+     use HasFactory, Sluggable;
     protected $fillable = [
         'name',
         'slug',
-        'thumbnail'
+        'thumbnail',
     ];
 
     /**
@@ -28,13 +29,12 @@ class Category extends Model
     {
         return [
             'slug' => [
-                'source' => 'name',
-                // 'onUpdate' => true,
+                'source' => 'name'
             ]
         ];
     }
 
-      protected static function boot()
+    protected static function boot()
     {
         parent::boot();
 
@@ -43,5 +43,23 @@ class Category extends Model
         });
     }
 
-   
+
+    public function getThumbnailUrl()
+    {
+        return Str::startsWith($this->thumbnail, ['http://', 'https://']) 
+            ? $this->thumbnail 
+            : asset(Storage::url($this->thumbnail));
+    }
+
+
+    /**
+     * Get all of the product for the Category
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function products(): HasMany
+    {
+        // , 'category_id', 'id'
+        return $this->hasMany(Product::class);
+    }
 }

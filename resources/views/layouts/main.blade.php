@@ -15,6 +15,8 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
+    <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -22,18 +24,20 @@
     @livewireStyles
 </head>
 
-<body class="font-sans antialiased">
+<body class="font-sans antialiased ">
     @include('includes.navbar')
 
     <main>
         {{ $slot }}
     </main>
+
     @include('includes.footer')
 
     @stack('modals')
 
     @livewireScripts
 
+    @stack('scripts')
     <script>
         feather.replace();
     </script>
