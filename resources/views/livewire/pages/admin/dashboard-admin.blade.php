@@ -7,12 +7,15 @@
                 {{ __('Dashboard') }}
             @endhasrole
         </h2>
+
+        <a wire:navigate href="/telescope/requests" class="bg-blue-500  text-white px-3 text-center py-1">Telescope</a>
     </x-slot>
 
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+
                 <h1 class="text-3xl font-bold mb-6 text-center">Produk Populer</h1>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach ($popularProductsDetails as $product)
