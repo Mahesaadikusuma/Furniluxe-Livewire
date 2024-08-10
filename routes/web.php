@@ -68,10 +68,10 @@ Route::prefix('Admin')->middleware(['auth', 'role_or_permission:Administrator'])
     Route::get('/transactions', TransactionList::class)->name('transaction.index');
     Route::get('/transaction/{id}', TransactionEdit::class)->name('transaction.edit');
     Route::get('/transaction/{id}', TransactionReview::class)->name('transaction.review');
-
+ 
 
     Route::get('/user/profile', UserProfile::class)->name('user.profile');
-    // Route::get('/products', ProductIndex::class)->name('product.index');
+    
 });
 
 Route::prefix('dashboard')->middleware('auth')
